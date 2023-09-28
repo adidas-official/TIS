@@ -1,0 +1,75 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: auto;
+    border-top: solid 1px red;
+    padding: 5em;
+}
+
+nav {
+    position: sticky;
+    z-index: 9999;
+    top: 0;
+    color: white;
+    background-color: darkslategrey;
+
+}
+
+.nav ul {
+    height: 40px;
+}
+
+nav > ul, .odkazy ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+nav li {
+    width: 96%;
+    margin: 0 2%;
+    text-align: center;
+    line-height: 200%;
+}
+
+nav a {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: gold;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.container figure {
+    margin: 1px;
+    display: flex;
+    width: 100%;
+}
+
+figure a {
+    display: flex;
+}
+
+.container img {
+    width: 100%;
+}

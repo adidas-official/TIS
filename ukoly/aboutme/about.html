@@ -8,14 +8,14 @@
 </head>
 <body>
 
+    <nav id="mainmenu">
+        <ul>
+            <li><a href="#about">O mě</a></li>
+            <li><a href="#nr">Nová Role</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+        </ul>
+    </nav>
     <section class="hero">
-        <nav id="mainmenu">
-            <ul>
-                <li><a href="#about">O mě</a></li>
-                <li><a href="#nr">Nová Role</a></li>
-                <li><a href="#contact">Kontakt</a></li>
-            </ul>
-        </nav>
         <h1>Zdeněk z Nové Role</h1>
     </section>
 
@@ -23,7 +23,7 @@
 
         <h2>Kdo jsem?</h2>
         <div class="split">
-            <div class="round">
+            <div class="portrait">
                 <img src="resources/img/profil.jpg" alt="">
             </div>
         </div>
@@ -49,32 +49,33 @@
 
         <div id="odkazy" class="odkazy">
             <h3>Odkazy na zajímavá místa</h3>
-            <ul>
-                <li>
-                    <a href="https://novarole.cz">
-                        <h4>Město Nová Role</h4>
+            <div class="container">
+                <figure>
+                    <figcaption>Nová Role</figcaption>
+                    <a href="https://novarole.cz" target="_blank">
                         <img src="resources/img/novarole.jpg" alt="Obec Nová Role, Karlovy Vary">
                     </a>
-                </li>
-                <li>
-                    <a href="https://www.kozodoj.cz/">
-                        <h4>Ekocentrum Kozodoj</h4>
+                </figure>
+                <figure>
+                    <a href="https://www.kozodoj.cz/" target="_blank">
                         <img src="resources/img/kozodoj.jpg" alt="ekocentrum kozodoj">
+                        <figcaption>Ekocentrum Kozodoj</figcaption>
                     </a>
-                </li>
-                <li>
-                    <a href="https://www.krusnohorci.cz/vylet/946-byvaly-cinovy-dul-rolava-a-zajatecky-cinovy-dul-sauersack">
-                        <h4>Cínový důl Rolava</h4>
+                </figure>
+                <figure>
+                    <a href="https://www.krusnohorci.cz/vylet/946-byvaly-cinovy-dul-rolava-a-zajatecky-cinovy-dul-sauersack" target="_blank">
                         <img src="resources/img/rolava.jpg" alt="cínový důl Rolava">
+                        <figcaption>Cínový důl Rolava</figcaption>
                     </a>
-                </li>
-            </ul>
+                </figure>
+            </div>
         </div>
     </section>
 
     <section id="contact">
         <h2>Kontakt</h2>
         <a href="mailto:zdenek.frydryn@gmail.com">zdenek.frydryn@gmail.com</a>
+        <a href="https://github.com/adidas-official" target="_blank">Github</a>
         <span class="date">25.09.2023</span>
     </section>
     
