@@ -1,0 +1,21 @@
+ul.bullets {
+    list-style: none;
+}
+
+ul.bullets li {
+    position: relative;
+    margin-left: 20px;
+}
+
+ul.bullets li::before {
+    content: '';
+    background-image: url("bullet-icon.png");
+    background-size: cover;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translateY(-50%);
+}

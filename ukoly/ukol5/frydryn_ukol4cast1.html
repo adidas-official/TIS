@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukol 4 - cast 1</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- vlastni odrzazky -->
+    <link rel="stylesheet" href="bullets.css">
+
+    <!-- pridat patu -->
+    <script src="addfooter.js"></script>
+    <style>
+        span {width: 100px; height: 100px; display: block; border: solid 5px red; float: left;}
+        span.prvni {margin-left: 20%; margin-top: 40%; position: relative}
+        span.druhy {border-color: blue; left: 20%; top: 40%; position: relative; }
+        span.treti {border-color: yellow; left: 20%; top: 40%; position: relative; }
+        span:nth-child(2) { border-color: green; left: 80%; top:40%; position: absolute; }
+    </style>
+</head>
+<body>
+    <span class="prvni">
+        <span class="druhy">
+            <span class="treti"></span>
+        </span>
+    </span>
+    <span></span>
+</body>
+</html>
