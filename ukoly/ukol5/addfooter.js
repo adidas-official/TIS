@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (var i = 1; i < 4; i++) {
         let li = document.createElement('li');
         let item = document.createElement('a');
-        item.setAttribute("href", "frydryn_ukol4cast" + i + ".html");
+        item.setAttribute("href", "frydryn_ukol5cast" + i + ".html");
         item.textContent = "Cast" + i; 
         ul.appendChild(li);
         li.appendChild(item);
