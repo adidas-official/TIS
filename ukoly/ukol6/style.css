@@ -1,0 +1,53 @@
+html, body {
+    height: 100%;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
+
+main input, main button {
+    margin: auto;
+    width: 25%;
+    height: 2em;
+    padding: 1px 5px;
+    box-sizing: border-box;
+}
+
+.canvas {
+    width: 500px;
+    margin: auto;
+    height: 500px;
+    border: solid 1px lightgrey;
+    position: relative;
+}
+
+#vysledky {
+    margin: 1em;
+}
+
+#rect {
+    width: 0;
+    height: 0;
+    transition: width 1s, height 1s, background-color 1s;
+    background-color: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+}
+
+#thumbnail {
+    cursor: pointer;
+    width: 90px;
+    margin: 20px auto;
+}
