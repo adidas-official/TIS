@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cviceni c.3 - tvorba webovych stranek">
+    <meta name="author" content="Zdenek Frydryn">
+    <meta name="keywords" content="Tvorba webovych stranek, HTML, VSPJ">
+    <title>Formular s kontrolou</title>
+</head>
+<body style="background-color: lightgrey;">
+    <section id="formwithcheck">
+        <form action="https://google.com">
+            <label for="oddo">Vyberte od 1 do 10</label>
+            <input type="range" name="oddo" id="oddo" min="1" max="10" step="1" required>
+            <br>
+            <label for="datum">Datum</label>
+            <input type="date" name="datum" id="datum" required>
+            <br>
+            <input type="submit" value="Odeslat">
+        </form>
+    </section>
+
+    <section id="hruska">
+        <img src="hruska2.gif" alt="">
+    </section>
+
+    <section id="tabulka" style="text-align: center;">
+        <table border="1px">
+            <tr>
+                <td rowspan="2">Rok</td>
+                <td colspan="2">Vysledky Prodeje</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>B</td>
+            </tr>
+            <tr>
+                <td>2019</td>
+                <td>20,5 mil.</td>
+                <td>6 mil.</td>
+            </tr>
+            <tr>
+                <td>2020</td>
+                <td>22 mil.</td>
+                <td>7 mil.</td>
+            </tr>
+            <tr>
+                <td>2021</td>
+                <td>24 mil.</td>
+                <td>9,7 mil.</td>
+            </tr>
+        </table>
+    </section>
+
+    <section><iframe src="../index.html" frameborder="0"></iframe></section>
+</body>
+</html>
