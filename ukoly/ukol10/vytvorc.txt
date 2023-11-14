@@ -1,0 +1,6 @@
+CREATE TABLE `tabulka` (
+  `cislo` int(11) NOT NULL AUTO_INCREMENT,
+  `jmeno` varchar(30) collate latin2_czech_cs NOT NULL default '',
+  `prijmeni` varchar(30) collate latin2_czech_cs NOT NULL default '',
+  PRIMARY KEY  (`cislo`)
+)
