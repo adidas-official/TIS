@@ -6,6 +6,8 @@
             return $status;
         }
     }
+
+    include "heslo.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +46,19 @@
             <span id="res-reg"></span>
             <span id="res-cislo"></span>
         </div>
+
+        <form action="#" method="POST">
+            <input type="number" name="delka" id="delka" min="1" max="32">
+            <input type="submit" value="Generovat">
+        </form>
+
+        <span id="heslo">
+            <?php 
+                if(isset($_POST["delka"])) {
+                    echo heslo($_POST["delka"]);
+                }
+            ?>
+        </span>
     </main>
     
 </body>
