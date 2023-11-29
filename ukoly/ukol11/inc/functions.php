@@ -15,7 +15,7 @@
 
     function zakaznik($pdo, $id) {
         $query = "SELECT
-            jmeno, email, id_fak, cena, datum
+            jmeno, email, id_fak, cena_fak, datum, id_zak
             FROM zakaznik
             LEFT JOIN faktura ON id_zak = zakaznik_id
             WHERE id_zak = $id";
@@ -32,7 +32,7 @@
 
     function faktura($pdo, $id) {
         $query = "SELECT 
-            *
+            id_fak, cena_fak, cena, nazev, pocet, zbozi_id, zakaznik_id
             FROM faktura
             JOIN faktura_zbozi ON id_fak = faktura_id
             JOIN zbozi ON zbozi_id = id_zbozi

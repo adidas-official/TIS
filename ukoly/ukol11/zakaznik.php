@@ -54,6 +54,11 @@ if (isset($_GET["id"])) {
         <h3>Nova objednavka</h3>
 
         <form action="inc/objednavka.inc.php" method="POST">
+            <input type="hidden" name="zakaznik" value=
+                <?php
+                    echo $zakaznik[0]["id_zak"]
+                ?>
+            >
             <table>
                 <thead>
                     <tr>
@@ -69,13 +74,15 @@ if (isset($_GET["id"])) {
                         ?>
                             <tr>
                                 <td>
-                                    <input type="checkbox" name="nazev" value=<?php echo $produkt["id_zbozi"]; ?>>
+                                    <input type="checkbox" name="id_zbozi[<?php echo $produkt["id_zbozi"]; ?>]" value=<?php echo $produkt["id_zbozi"]; ?>>
                                     <?php echo $produkt["id_zbozi"]; ?>
                                 </td>
                                 <td><?php echo $produkt["nazev"] ?></td>
                                 <td><?php echo $produkt["cena"] . " Kč"; ?></td>
-                                <td><?php echo strval(intval($produkt["cena"]) * 1.21) . " Kč" ?></td>
-                                <td><input type="number" name="ks" min=1></td>
+                                <td><?php echo strval(intval($produkt["cena"]) * 1.21) . " Kč"; ?></td>
+                                <td>
+                                    <input type="number" name="ks[<?php echo $produkt["id_zbozi"]; ?>]" min=1>
+                                </td>
                             </tr>
                         <?php
                     }

@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zbozi"])) {
         include_once("functions.php");
 
         $nazev = htmlspecialchars($_POST["nazev"]);
-        $cena = htmlspecialchars($_POST["cena"]);
+        $cena_za_ks = htmlspecialchars($_POST["cena"]);
 
 
         // konrola duplicitnich emailu
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zbozi"])) {
 
             $stmt = $conn->prepare($query);
             $stmt->bindParam(":nazev", $nazev);
-            $stmt->bindParam(":cena", $cena);
+            $stmt->bindParam(":cena", $cena_za_ks);
             $stmt->execute();
 
             header("Location: ../index.php");
