@@ -13,7 +13,7 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik"]
     require_once("dbh.inc.php");
 
     // zkontrolovat, jestli souhlasi ks a id
-    $id_zbozi = $_POST["id_zbozi"];
+    $id_fak = $_POST["id_zbozi"];
     $pocet_ks = $_POST["ks"];
 
     echo "id:ks<br>";
@@ -23,12 +23,12 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik"]
     $counter = 0;
 
     for ($i = 1; $i <= count($pocet_ks); $i++) {
-        if (isset($id_zbozi[$i])) {
+        if (isset($id_fak[$i])) {
             $counter += 1;
             // echo "ID: " . $id_zbozi[$i] . "<br>";
             // echo "Pocet ks: " . $pocet_ks[$i] . "<br>";
-            $query .= "id_zbozi = '$id_zbozi[$i]'";
-            if ($counter != count($id_zbozi)) {
+            $query .= "id_zbozi = '$id_fak[$i]'";
+            if ($counter != count($id_fak)) {
                 $query .= " OR ";
             }
         }
@@ -41,58 +41,66 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik"]
     $results = $stmt->fetchall(PDO::FETCH_ASSOC);
     $faktura_cena = 0;
 
-
-    // Debug 
-    echo "z db<br>";
-    echo "<pre>" . print_r($results, true) . "</pre>";
-
-
-    echo "<ul>";
+    // Vypocet celkove ceny na fakturu
     for ($i = 0; $i < count($results); $i++) {
         $id = $results[$i]["id_zbozi"];
         $cena_za_ks = $results[$i]["cena"];
         $ks = $pocet_ks[$id];
 
         $celkem = intval($cena_za_ks) * intval($ks);
-        echo "<li>" . $id. ": " . $ks . " * " . $cena_za_ks . " = " . $celkem . "</li>";
         $faktura_cena += $celkem;
 
     }
-    echo "</ul>";
 
-    // End debug
-
-    $zakaznik = htmlentities($_POST["zakaznik"]);
+    $zakaznik_faktura = htmlentities($_POST["zakaznik"]);
     $now = time();
 
-    $query = "INSERT INTO
-                faktura (zakaznik_id, cena_fak, datum)
-                VALUES (:zakaznik, :cena_fak, :datum)";
-    $stmt = $conn->prepare($query);
-    $stmt->bindParam("zakaznik", $zakaznik);
-    $stmt->bindParam("cena_fak", $faktura_cena);
-    $stmt->bindParam("datum", $now);
-    // $stmt->execute();
+    // Nova faktura
+    try {
 
-    // $faktura_id = $conn->lastInsertId();
+        $query = "INSERT INTO
+                    faktura (zakaznik_id, cena_fak, datum)
+                    VALUES (:zakaznik, :cena_fak, :datum)";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam("zakaznik", $zakaznik_faktura);
+        $stmt->bindParam("cena_fak", $faktura_cena);
+        $stmt->bindParam("datum", $now);
+        $stmt->execute();
 
-    $query = "INSERT INTO faktura_zbozi";
+        $faktura_id = $conn->lastInsertId();
 
+    } catch (Exception $e) {
+        $conn = null;
+        die("Chyba pri vkladani do databaze: " . $e->getMessage());
+    }
+
+    // Nova faktura_zbozi pro kazdy predmet na fakture
     for ($i = 0; $i < count($results); $i++) {
-        $id = $results[$i]["id_zbozi"];
-        $cena_za_ks = $results[$i]["cena"];
-        $ks = $pocet_ks[$id];
+        try {
+            $id = $results[$i]["id_zbozi"];
+            $ks = $pocet_ks[$id];
 
-        $celkem = intval($cena_za_ks) * intval($ks);
-        echo "<li>" . $id. ": " . $ks . " * " . $cena_za_ks . " = " . $celkem . "</li>";
-        $faktura_cena += $celkem;
+            $query = "INSERT INTO faktura_zbozi (faktura_id, zbozi_id, pocet)
+                        VALUES (:last_fak, :zbozi, :pocet)";
+
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam("last_fak", $faktura_id);
+            $stmt->bindParam("zbozi", $id);
+            $stmt->bindParam("pocet", $ks);
+            $stmt->execute();
+        } catch (Exception $e) {
+            $conn = null;
+            die("Chyba pri vkladani do databaze: " . $e->getMessage());
+        }
+
 
     }
-    // $query = "INSERT INTO
-    //             faktura_zbozi"
 
-    // $stmt = null;
-    // $conn = null;
+    $stmt = null;
+    $conn = null;
+
+    header("Location: ../zakaznik.php?id=$zakaznik_faktura");
+    die();
 
 
 } //

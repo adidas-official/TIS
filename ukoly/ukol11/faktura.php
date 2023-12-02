@@ -48,6 +48,8 @@ if (isset($_GET["id"])) {
                 <?php } ?>
             </tbody>
         </table>
+
+        <a href="<?php echo "upravfakturu.php?id=".$faktura[0]["id_fak"]?>">Upravit</a>
     </div>
     
 </body>

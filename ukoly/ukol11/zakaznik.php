@@ -6,7 +6,7 @@ require_once("inc/functions.php");
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $zakaznik = zakaznik($conn, $id);
+    $zakaznik_faktura = zakaznik($conn, $id);
     $zbozi = vypis_zbozi($conn);
 } else {
     header("Location: index.php");
@@ -19,44 +19,54 @@ if (isset($_GET["id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $zakaznik[0]["jmeno"] ?></title>
+    <title><?php echo $zakaznik_faktura[0]["jmeno"] ?></title>
 </head>
 <body>
 
-    <?php if (!$zakaznik) { echo "Chyba v databazi: no record";} ?>
+    <?php if (!$zakaznik_faktura) { echo "Chyba v databazi: no record";} ?>
     <a href="index.php">../</a>
 
-    <h1>Zakaznik: <?php echo $zakaznik[0]["jmeno"] . " | " . $zakaznik[0]["email"] ?></h1>
+    <h1>Zakaznik: <?php echo $zakaznik_faktura[0]["jmeno"] . " | " . $zakaznik_faktura[0]["email"] ?></h1>
 
     <div id="faktury">
         <h2>Faktury</h2>
-        <table>
-            <thead>
-                <th>ID faktury</th>
-                <th>Cena</th>
-            </thead>
-            <tbody>
+        <?php 
+            if (!empty($zakaznik_faktura[0]["id_fak"])) {
+                ?>
+            <table>
+                <thead>
+                    <th>ID faktury</th>
+                    <th>Cena</th>
+                </thead>
+                <tbody>
+                <?php 
+
+                    foreach ($zakaznik_faktura as $faktura) {
+                        echo "<tr>".
+                                "<td>".
+                                "<a href='faktura.php?id=" . $faktura["id_fak"] . "'>" .
+                                $faktura["id_fak"] .
+                                "</a>
+                                </td>" .
+                                "<td>". $faktura["cena_fak"] .
+                                "<a href='inc/smaz_fakturu.inc.php?id=" . $faktura["id_fak"] . "&id_z='" . $zakaznik_faktura[0]["id_zak"]. "'>X</a></td>" .
+                            "</tr>";
+                    }
+                ?>
+                </tbody>
+            </table>
             <?php 
-            foreach ($zakaznik as $faktura) {
-                echo "<tr>".
-                        "<td>".
-                        "<a href='faktura.php?id=" . $faktura["id_fak"] . "'>" .
-                        $faktura["id_fak"] .
-                        "</a>".
-                        "</td>" .
-                        "<td>". $faktura["cena"] . "</td>" .
-                    "</tr>";
-            }
+                } else {
+                    echo "Zakaznik nema zadne faktury";
+                }
             ?>
-            </tbody>
-        </table>
 
         <h3>Nova objednavka</h3>
 
         <form action="inc/objednavka.inc.php" method="POST">
             <input type="hidden" name="zakaznik" value=
                 <?php
-                    echo $zakaznik[0]["id_zak"]
+                    echo $zakaznik_faktura[0]["id_zak"]
                 ?>
             >
             <table>
@@ -72,18 +82,18 @@ if (isset($_GET["id"])) {
                 <tbody>
                     <?php foreach ($zbozi as $produkt) {
                         ?>
-                            <tr>
-                                <td>
-                                    <input type="checkbox" name="id_zbozi[<?php echo $produkt["id_zbozi"]; ?>]" value=<?php echo $produkt["id_zbozi"]; ?>>
-                                    <?php echo $produkt["id_zbozi"]; ?>
-                                </td>
-                                <td><?php echo $produkt["nazev"] ?></td>
-                                <td><?php echo $produkt["cena"] . " Kč"; ?></td>
-                                <td><?php echo strval(intval($produkt["cena"]) * 1.21) . " Kč"; ?></td>
-                                <td>
-                                    <input type="number" name="ks[<?php echo $produkt["id_zbozi"]; ?>]" min=1>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="id_zbozi[<?php echo $produkt["id_zbozi"]; ?>]" value=<?php echo $produkt["id_zbozi"]; ?>>
+                                <?php echo $produkt["id_zbozi"]; ?>
+                            </td>
+                            <td><?php echo $produkt["nazev"] ?></td>
+                            <td><?php echo $produkt["cena"] . " Kč"; ?></td>
+                            <td><?php echo strval(intval($produkt["cena"]) * 1.21) . " Kč"; ?></td>
+                            <td>
+                                <input type="number" name="ks[<?php echo $produkt["id_zbozi"]; ?>]" min=1>
+                            </td>
+                        </tr>
                         <?php
                     }
                     ?>

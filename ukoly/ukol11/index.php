@@ -69,6 +69,8 @@ require_once("inc/functions.php");;
                             <th>Nazev zbozi</th>
                             <th>Cena zbozi</th>
                             <th>Cena zbozi s DPH</th>
+                            <th>Upravit zbozi</th>
+                            <th>Smazat zbozi</th>
                         </tr>
                     </thead>
                 <tbody>
@@ -82,8 +84,9 @@ require_once("inc/functions.php");;
                             <td> <?php echo $result["nazev"]; ?></td>
                             <td> <?php echo $result["cena"] . " Kč"; ?></td>
                             <td> <?php echo strval(intval($result["cena"]) * 1.21) . " Kč" ?></td>
+                            <td> <a href=<?php echo "upravitzbozi.php?id=" . $result["id_zbozi"] ?>>*</a></td>
+                            <td> <a href=<?php echo "inc/smazatzbozi.inc.php?id=". $result["id_zbozi"] ?>>X</a></td>
                         </tr>
-
                     <?php
                 }
 
@@ -107,7 +110,8 @@ require_once("inc/functions.php");;
             <span class="error">
                 <?php
                     include_once("errors.php");
-                    echo $errors[$_GET["error"]]
+                    echo $errors[$_GET["error"]] . "<br>";
+                    echo $_GET["e"];
                 ?>
             </span>
         <?php

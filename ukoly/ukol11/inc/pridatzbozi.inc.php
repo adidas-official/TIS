@@ -14,9 +14,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zbozi"])) {
 
 
         // konrola duplicitnich emailu
-        $zbozi = vypis_zbozi($conn);
+        $faktura = vypis_zbozi($conn);
 
-        foreach ($zbozi as $produkt) {
+        foreach ($faktura as $produkt) {
             if ($nazev == $produkt["nazev"]) {
                 header("Location: ../index.php?error=20");
                 $conn = null;

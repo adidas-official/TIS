@@ -61,3 +61,33 @@
 
         return false;
     }
+
+    function najdi_zbozi_podle_id($id, $pdo) {
+
+        $query = "SELECT * FROM zbozi WHERE id_zbozi = $id LIMIT 1;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
+
+        return false;
+
+    }
+
+    function najdi_fakturu_podle_id($id, $pdo) {
+
+        $query = "SELECT * FROM faktura WHERE id_fak = $id LIMIT 1;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
+
+        return false;
+
+    }

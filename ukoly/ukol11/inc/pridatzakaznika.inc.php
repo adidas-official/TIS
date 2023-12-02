@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zakaznika"])) {
         // konrola duplicitnich emailu
         $zakaznici = vypis_zakazniky($conn);
 
-        foreach ($zakaznici as $zakaznik) {
-            if ($email == $zakaznik["email"]) {
+        foreach ($zakaznici as $zakaznik_faktura) {
+            if ($email == $zakaznik_faktura["email"]) {
                 header("Location: ../index.php?error=12");
                 $conn = null;
                 die();
