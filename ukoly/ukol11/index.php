@@ -19,7 +19,6 @@ require_once("inc/functions.php");;
     <h2>TOOD:</h2>
     <ul>
         <li>Vyhledat zbozi</li>
-        <li>Seratit zbozi</li>
         <li>Vypsat faktury</li>
         <li>Rozdelit na karty: zak|fak|zbo</li>
         <li>css</li>
@@ -62,7 +61,7 @@ require_once("inc/functions.php");;
             <h2>Zbozi</h2>
             
             <?php
-            $results = vypis_zbozi($conn);
+            $results = vypis_zbozi($conn, $_GET["orderby"], $_GET["desc"]);
             if (empty($results)) {
                 echo "<p>Nemame zadne zbozi</p>";
             } else {
@@ -71,9 +70,18 @@ require_once("inc/functions.php");;
                 <table>
                     <thead>
                         <tr>
-                            <th>Cislo zbozi</th>
-                            <th>Nazev zbozi</th>
-                            <th>Cena zbozi</th>
+                            <th>Cislo zbozi
+                                <a href="index.php?orderby=id_zbozi">+</a>
+                                <a href="index.php?orderby=id_zbozi&desc=true">-</a>
+                            </th>
+                            <th>Nazev zbozi
+                                <a href="index.php?orderby=nazev">+</a>
+                                <a href="index.php?orderby=nazev&desc=true">-</a>
+                            </th>
+                            <th>Cena zbozi
+                                <a href="index.php?orderby=cena">+</a>
+                                <a href="index.php?orderby=cena&desc=true">-</a>
+                            </th>
                             <th>Cena zbozi s DPH</th>
                             <th>Upravit zbozi</th>
                             <th>Smazat zbozi</th>

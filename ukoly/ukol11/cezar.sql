@@ -94,7 +94,7 @@ CREATE TABLE `zakaznik` (
 
 LOCK TABLES `zakaznik` WRITE;
 /*!40000 ALTER TABLE `zakaznik` DISABLE KEYS */;
-INSERT INTO `zakaznik` VALUES (1,'Timan','timan@gmail.com'),(2,'Prusa','prusa@gmail.com'),(3,'Bohumil','bohumil@seznam.cz'),(5,'Lucka','lucka@gmail.com'),(6,'Alfa','alaf@gmail.com'),(7,'Beta','beta@gmail.com'),(8,'Martin','martin@gmail.com');
+INSERT INTO `zakaznik` VALUES (1,'Timan','toman@gmail.com'),(2,'Prusa','prusa@gmail.com'),(3,'Bohumil','bohumil@seznam.cz'),(5,'Lucka','lucka@gmail.com'),(6,'Alfa','alaf@gmail.com'),(7,'Beta','beta@gmail.com'),(8,'Martin','martin@gmail.com');
 /*!40000 ALTER TABLE `zakaznik` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-03 18:03:04
+-- Dump completed on 2023-12-03 20:36:19

@@ -43,13 +43,23 @@
         return false;
     }
 
-    function faktura($id, $pdo) {
+    function faktura($id, $pdo, $order=false, $desc=false) {
         $query = "SELECT 
             id_fak, cena_fak, cena, nazev, pocet, zbozi_id, zakaznik_id
             FROM faktura
             JOIN faktura_zbozi ON id_fak = faktura_id
             JOIN zbozi ON zbozi_id = id_zbozi
             WHERE id_fak = $id";
+
+        if ($order) {
+            $query .= " ORDER BY " .$order;
+        }
+
+        if ($desc) {
+            $query .= " DESC";
+        }
+
+        $query .= ";";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -61,9 +71,18 @@
         return false;
     }
 
-    function vypis_zbozi($pdo) {
-    
-        $query = "SELECT * FROM zbozi;";
+    function vypis_zbozi($pdo, $order=false, $desc=false) {
+
+        $query = "SELECT * FROM zbozi";
+        if ($order) {
+            $query .= " ORDER BY $order";
+        }
+
+        if ($desc) {
+            $query .= " DESC";
+        }
+
+        $query .= ";";
         $stmt = $pdo->prepare($query);
         $stmt->execute();
         $results = $stmt->fetchall(PDO::FETCH_ASSOC);

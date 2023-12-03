@@ -6,7 +6,7 @@ require_once("inc/functions.php");
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $objednavka = faktura($id, $conn);
+    $objednavka = faktura($id, $conn, $_GET["orderby"], $_GET["desc"]);
 } else {
     header("Location: index.php");
 }
@@ -29,11 +29,23 @@ if (isset($_GET["id"])) {
         <table>
             <thead>
                 <tr>
-                    <th>Cislo zbozi</th>
-                    <th>Nazev zbozi</th>
-                    <th>Cena bez DPH</th>
+                    <th>Cislo zbozi
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=zbozi_id">+</a>
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=zbozi_id&desc=true">-</a>
+                    </th>
+                    <th>Nazev zbozi
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=nazev">+</a>
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=nazev&desc=true">-</a>
+                    </th>
+                    <th>Cena bez DPH
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=cena">+</a>
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=cena&desc=true">-</a>
+                    </th>
                     <th>Cena s DPH</th>
-                    <th>Pocet</th>
+                    <th>Pocet
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=pocet">+</a>
+                        <a href="faktura.php?id=<?php echo $id ?>&orderby=pocet&desc=true">-</a>
+                    </th>
                 </tr>
             </thead>
             <tbody>

@@ -7,7 +7,7 @@ require_once("inc/functions.php");
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
     $zakaznik_faktura = zakaznik_faktura($conn, $id);
-    $zbozi = vypis_zbozi($conn);
+    $zbozi = vypis_zbozi($conn, $_GET["orderby"], $_GET["desc"]);
 } else {
     header("Location: index.php");
 }
@@ -74,9 +74,18 @@ if (isset($_GET["id"])) {
             <table>
                 <thead>
                     <tr>
-                        <th>Cislo zbozi</th>
-                        <th>Nazev zbozi</th>
-                        <th>Cena bez DPH</th>
+                        <th>Cislo zbozi
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=id_zbozi">+</a>
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=id_zbozi&desc=true">-</a>
+                        </th>
+                        <th>Nazev zbozi
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=nazev">+</a>
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=nazev&desc=true">-</a>
+                        </th>
+                        <th>Cena bez DPH
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=cena">+</a>
+                            <a href="zakaznik.php?id=<?php echo $id ?>&orderby=cena&desc=true">-</a>
+                        </th>
                         <th>Cena s DPH</th>
                         <th>Pocet</th>
                     </tr>
