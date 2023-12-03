@@ -6,7 +6,7 @@ require_once("inc/functions.php");
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $zakaznik_faktura = zakaznik($conn, $id);
+    $zakaznik_faktura = zakaznik_faktura($conn, $id);
     $zbozi = vypis_zbozi($conn);
 } else {
     header("Location: index.php");
@@ -28,6 +28,8 @@ if (isset($_GET["id"])) {
 
     <h1>Zakaznik: <?php echo $zakaznik_faktura[0]["jmeno"] . " | " . $zakaznik_faktura[0]["email"] ?></h1>
 
+    <a href=<?php echo "upravzakaznika.php?id=$id" ?>>Upravit zakaznika</a>
+
     <div id="faktury">
         <h2>Faktury</h2>
         <?php 
@@ -41,15 +43,15 @@ if (isset($_GET["id"])) {
                 <tbody>
                 <?php 
 
-                    foreach ($zakaznik_faktura as $faktura) {
+                    foreach ($zakaznik_faktura as $objednavka) {
                         echo "<tr>".
                                 "<td>".
-                                "<a href='faktura.php?id=" . $faktura["id_fak"] . "'>" .
-                                $faktura["id_fak"] .
+                                "<a href='faktura.php?id=" . $objednavka["id_fak"] . "'>" .
+                                $objednavka["id_fak"] .
                                 "</a>
                                 </td>" .
-                                "<td>". $faktura["cena_fak"] .
-                                "<a href='inc/smaz_fakturu.inc.php?id=" . $faktura["id_fak"] . "&id_z='" . $zakaznik_faktura[0]["id_zak"]. "'>X</a></td>" .
+                                "<td>". $objednavka["cena_fak"] .
+                                "<a href='inc/smaz_fakturu.inc.php?id=" . $objednavka["id_fak"] . "&id_z=" . $zakaznik_faktura[0]["id_zak"]. "'>X</a></td>" .
                             "</tr>";
                     }
                 ?>
@@ -64,7 +66,7 @@ if (isset($_GET["id"])) {
         <h3>Nova objednavka</h3>
 
         <form action="inc/objednavka.inc.php" method="POST">
-            <input type="hidden" name="zakaznik" value=
+            <input type="hidden" name="zakaznik_faktura" value=
                 <?php
                     echo $zakaznik_faktura[0]["id_zak"]
                 ?>

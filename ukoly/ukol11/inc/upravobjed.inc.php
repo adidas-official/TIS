@@ -1,45 +1,56 @@
+
 <?php 
 
 require_once("../config.php");
 require_once("functions.php");
 
-if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST["objednat"])) {
+if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST["uprav"])) {
     header("Location: ../index.php");
     exit();
 }
 
-if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_faktura"])) {
-
+if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["id_fak"])) {
     require_once("dbh.inc.php");
 
     // zkontrolovat, jestli souhlasi ks a id
-    $id_zak = $_POST["id_zbozi"];
+    $faktura_id = htmlentities($_POST["id_fak"]);
     $pocet_ks = $_POST["ks"];
+    $id_zbozi = $_POST["id_zbozi"];
 
-    // echo "id:ks<br>";
-    // echo "<pre>" . print_r($pocet_ks, true) . "</pre>";
+    $query = "SELECT zakaznik_id FROM faktura WHERE id_fak=:id_fak LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam("id_fak", $faktura_id);
+    $stmt->execute();
+    $zakaznik_id = $stmt->fetchColumn();
+    echo $zakaznik_id;
+
+    echo "id:ks<br>";
+    echo "<pre>" . print_r($pocet_ks, true) . "</pre>";
 
     $query = "SELECT id_zbozi, cena FROM zbozi WHERE ";
     $counter = 0;
 
     for ($i = 1; $i <= count($pocet_ks); $i++) {
-        if (isset($id_zak[$i])) {
+        if (isset($id_zbozi[$i])) {
             $counter += 1;
-            // echo "ID: " . $id_zbozi[$i] . "<br>";
-            // echo "Pocet ks: " . $pocet_ks[$i] . "<br>";
-            $query .= "id_zbozi = '$id_zak[$i]'";
-            if ($counter != count($id_zak)) {
+            echo "ID: " . $id_zbozi[$i] . "<br>";
+            echo "Pocet ks: " . $pocet_ks[$i] . "<br>";
+            $query .= "id_zbozi = '$id_zbozi[$i]'";
+            if ($counter != count($id_zbozi)) {
                 $query .= " OR ";
             }
         }
     }
     $query .= ";";
+    echo $query;
 
     // select vsechno zbozi se zadanymi id
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $results = $stmt->fetchall(PDO::FETCH_ASSOC);
     $faktura_cena = 0;
+
+    echo "<pre>" . print_r($results, true) . "</pre>";
 
     // Vypocet celkove ceny na fakturu
     for ($i = 0; $i < count($results); $i++) {
@@ -52,40 +63,38 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_f
 
     }
 
-    $zakaznik_faktura = htmlentities($_POST["zakaznik_faktura"]);
-    $now = time();
-
     // Nova faktura
     try {
 
-        $query = "INSERT INTO
-                    faktura (zakaznik_id, cena_fak, datum)
-                    VALUES (:zakaznik, :cena_fak, :datum)";
-
+        $query = "UPDATE faktura SET cena_fak=:cena_fak WHERE id_fak=:id_fak";
         $stmt = $conn->prepare($query);
-        $stmt->bindParam("zakaznik", $zakaznik_faktura);
+        $stmt->bindParam("id_fak", $faktura_id);
         $stmt->bindParam("cena_fak", $faktura_cena);
-        $stmt->bindParam("datum", $now);
         $stmt->execute();
 
-        $faktura_id = $conn->lastInsertId();
 
     } catch (Exception $e) {
         $conn = null;
         die("Chyba 1 pri vkladani do databaze: " . $e->getMessage());
     }
 
-    // Nova faktura_zbozi pro kazdy predmet na fakture
+    // Upravena faktura_zbozi pro kazdy predmet na fakture
+
+    $query = "DELETE FROM faktura_zbozi WHERE faktura_id=:id_fak;";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam("id_fak", $faktura_id);
+    $stmt->execute();
+
     for ($i = 0; $i < count($results); $i++) {
         try {
             $id = $results[$i]["id_zbozi"];
             $ks = $pocet_ks[$id];
 
             $query = "INSERT INTO faktura_zbozi (faktura_id, zbozi_id, pocet)
-                        VALUES (:last_fak, :zbozi, :pocet)";
+                        VALUES (:id_fak, :zbozi, :pocet)";
 
             $stmt = $conn->prepare($query);
-            $stmt->bindParam("last_fak", $faktura_id);
+            $stmt->bindParam("id_fak", $faktura_id);
             $stmt->bindParam("zbozi", $id);
             $stmt->bindParam("pocet", $ks);
             $stmt->execute();
@@ -95,12 +104,12 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_f
         }
 
 
-    }
+    } 
 
     $stmt = null;
     $conn = null;
 
-    header("Location: ../zakaznik.php?id=$zakaznik_faktura");
+    header("Location: ../zakaznik.php?id=$zakaznik_id");
     die();
 
 

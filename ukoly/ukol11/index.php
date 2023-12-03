@@ -16,7 +16,14 @@ require_once("inc/functions.php");;
 <body>
 
     <h1>Evidence CEZAR G3000</h1>
-
+    <h2>TOOD:</h2>
+    <ul>
+        <li>Vyhledat zbozi</li>
+        <li>Seratit zbozi</li>
+        <li>Vypsat faktury</li>
+        <li>Rozdelit na karty: zak|fak|zbo</li>
+        <li>css</li>
+    </ul>
     <div id="zakaznici">
         <h2>Zakaznici</h2>
         <?php 
@@ -30,7 +37,6 @@ require_once("inc/functions.php");;
                     echo "<li><a href='zakaznik.php?id=" . $result["id_zak"] . "'>"
                     . $result["jmeno"] .
                     "</a>".
-                    "<a href='smazatzakaznika.php?id=". $result["id_zak"] ."'>X</a>".
                     "</li>";
                 }
 

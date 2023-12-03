@@ -13,7 +13,7 @@
     }
 
 
-    function zakaznik($pdo, $id) {
+    function zakaznik_faktura($pdo, $id) {
         $query = "SELECT
             jmeno, email, id_fak, cena_fak, datum, id_zak
             FROM zakaznik
@@ -30,7 +30,20 @@
         return false;
     }
 
-    function faktura($pdo, $id) {
+    function zakaznik_podle_id($id, $pdo) {
+        $query = "SELECT * FROM zakaznik WHERE id_zak=$id LIMIT 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        }
+        return false;
+    }
+
+    function faktura($id, $pdo) {
         $query = "SELECT 
             id_fak, cena_fak, cena, nazev, pocet, zbozi_id, zakaznik_id
             FROM faktura
@@ -90,4 +103,17 @@
 
         return false;
 
+    }
+
+    function vypis_objednavku($id_fak, $pdo) {
+        $query = "SELECT zbozi_id, pocet FROM faktura_zbozi WHERE faktura_id = $id_fak;";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        if ($results) {
+            return $results;
+        }
+
+        return false;
     }

@@ -9,15 +9,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zbozi"])) {
         require_once("dbh.inc.php");
         include_once("functions.php");
 
-        $nazev = htmlspecialchars($_POST["nazev"]);
+        $jmeno = htmlspecialchars($_POST["nazev"]);
         $cena_za_ks = htmlspecialchars($_POST["cena"]);
 
 
         // konrola duplicitnich emailu
-        $faktura = vypis_zbozi($conn);
+        $objednavka = vypis_zbozi($conn);
 
-        foreach ($faktura as $produkt) {
-            if ($nazev == $produkt["nazev"]) {
+        foreach ($objednavka as $produkt) {
+            if ($jmeno == $produkt["nazev"]) {
                 header("Location: ../index.php?error=20");
                 $conn = null;
                 die();
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zbozi"])) {
             $query = "INSERT INTO zbozi (nazev, cena) VALUES (:nazev, :cena);";
 
             $stmt = $conn->prepare($query);
-            $stmt->bindParam(":nazev", $nazev);
+            $stmt->bindParam(":nazev", $jmeno);
             $stmt->bindParam(":cena", $cena_za_ks);
             $stmt->execute();
 

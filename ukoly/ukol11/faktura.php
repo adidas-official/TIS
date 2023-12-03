@@ -6,7 +6,7 @@ require_once("inc/functions.php");
 
 if (isset($_GET["id"])) {
     $id = $_GET["id"];
-    $faktura = faktura($conn, $id);
+    $objednavka = faktura($id, $conn);
 } else {
     header("Location: index.php");
 }
@@ -17,13 +17,13 @@ if (isset($_GET["id"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cezar G3000 | <?php echo $faktura[0]["id_fak"] ?></title>
+    <title>Cezar G3000 | <?php echo $objednavka[0]["id_fak"] ?></title>
 </head>
 <body>
 
-    <a href=<?php echo "zakaznik.php?id=" . $faktura[0]["zakaznik_id"] ?>>../</a>
+    <a href=<?php echo "zakaznik.php?id=" . $objednavka[0]["zakaznik_id"] ?>>../</a>
 
-    <h1>Faktura <?php echo $faktura[0]["id_fak"] . " | " . $faktura[0]["cena_fak"] ?></h1>
+    <h1>Faktura <?php echo $objednavka[0]["id_fak"] . " | " . $objednavka[0]["cena_fak"] ?></h1>
 
     <div id="faktura">
         <table>
@@ -37,7 +37,7 @@ if (isset($_GET["id"])) {
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($faktura as $produkt) { ?>
+                <?php foreach ($objednavka as $produkt) { ?>
                 <tr>
                     <td><?php echo $produkt["zbozi_id"] ?></td>
                     <td><?php echo $produkt["nazev"] ?></td>
@@ -49,7 +49,7 @@ if (isset($_GET["id"])) {
             </tbody>
         </table>
 
-        <a href="<?php echo "upravfakturu.php?id=".$faktura[0]["id_fak"]?>">Upravit</a>
+        <a href="<?php echo "upravobjednavku.php?id=".$objednavka[0]["id_fak"]?>">Upravit</a>
     </div>
     
 </body>

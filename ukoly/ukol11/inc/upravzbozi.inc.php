@@ -18,14 +18,14 @@ if (empty($_POST["nazev"]) || empty($_POST["cena"])) {
 
 require_once("dbh.inc.php");
 
-$nazev = htmlentities($_POST["nazev"]);
-$cena = htmlentities($_POST["cena"]);
+$jmeno = htmlentities($_POST["nazev"]);
+$email = htmlentities($_POST["cena"]);
 
 try {
     $query = "UPDATE zbozi SET nazev =:nazev, cena =:cena WHERE id_zbozi = $id LIMIT 1";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam("nazev", $nazev);
-    $stmt->bindParam("cena", $cena);
+    $stmt->bindParam("nazev", $jmeno);
+    $stmt->bindParam("cena", $email);
     $stmt->execute();
 
     $conn = null;
