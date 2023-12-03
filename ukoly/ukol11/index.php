@@ -23,6 +23,8 @@ require_once("inc/functions.php");;
         <li>Rozdelit na karty: zak|fak|zbo</li>
         <li>css</li>
     </ul>
+
+    <a href="vyhledavac.php">Vyhledavac</a>
     <div id="zakaznici">
         <h2>Zakaznici</h2>
         <?php 
@@ -43,12 +45,6 @@ require_once("inc/functions.php");;
             }
 
         ?>
-
-        <h3>Vyhledavani</h3>
-        <form action="inc/najdijmeno.inc.php" method="POST">
-            <input type="text" name="jmeno" required placeholder="Jmeno ..."><br>
-            <button type="submit">Vyhledej</button>
-        </form>
 
         <h3>Pridat zakaznika</h3>
         <form action="inc/pridatzakaznika.inc.php" method="POST">
