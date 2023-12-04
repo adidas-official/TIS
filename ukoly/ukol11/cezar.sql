@@ -110,7 +110,7 @@ CREATE TABLE `zbozi` (
   `nazev` varchar(32) NOT NULL,
   `cena` int NOT NULL,
   PRIMARY KEY (`id_zbozi`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +119,7 @@ CREATE TABLE `zbozi` (
 
 LOCK TABLES `zbozi` WRITE;
 /*!40000 ALTER TABLE `zbozi` DISABLE KEYS */;
-INSERT INTO `zbozi` VALUES (1,'savo 1L',129),(2,'zubni pasta',49),(3,'kartacek na zuby',39),(4,'Jar 1L',68),(5,'Houbicky 10ks',39),(6,'Bref power active',30),(7,'Ariel 5kg',130),(8,'Head&amp;Shoulders',117),(17,'Katrin Uterky 100ks',199);
+INSERT INTO `zbozi` VALUES (1,'Savo 1L',129),(2,'Pasta na zuby',49),(3,'kartacek na zuby',39),(4,'Jar 1L',68),(5,'Houbicky 10ks',39),(6,'Bref power active',30),(7,'Ariel 5kg',130),(8,'Head&amp;Shoulders',117),(17,'Katrin Uterky 100ks',199),(19,'Bref Jarni svezest 20ml',29);
 /*!40000 ALTER TABLE `zbozi` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -132,4 +132,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-03 23:28:55
+-- Dump completed on 2023-12-04 17:16:16

@@ -71,6 +71,32 @@
         return false;
     }
 
+    function vypis_faktury($pdo, $order=false, $desc=false) {
+        $query = "SELECT 
+            id_fak, jmeno, email, cena_fak, zakaznik_id
+            FROM faktura
+            JOIN zakaznik ON id_zak = zakaznik_id";
+
+        if ($order) {
+            $query .= " ORDER BY " .$order;
+        }
+
+        if ($desc) {
+            $query .= " DESC";
+        }
+
+        $query .= ";";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
+        $results = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+        if ($results) {
+            return $results;
+        }
+
+        return false;
+    }
+
     function vypis_zbozi($pdo, $order=false, $desc=false) {
 
         $query = "SELECT * FROM zbozi";

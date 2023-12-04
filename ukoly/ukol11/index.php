@@ -18,8 +18,6 @@ require_once("inc/functions.php");;
     <h1>Evidence CEZAR G3000</h1>
     <h2>TOOD:</h2>
     <ul>
-        <li>Vyhledat zbozi</li>
-        <li>Vypsat faktury</li>
         <li>Rozdelit na karty: zak|fak|zbo</li>
         <li>css</li>
     </ul>
@@ -57,7 +55,7 @@ require_once("inc/functions.php");;
             <h2>Zbozi</h2>
             
             <?php
-            $results = vypis_zbozi($conn, $_GET["orderby"], $_GET["desc"]);
+            $results = vypis_zbozi($conn, $_GET["orderzboziby"], $_GET["zbozidesc"]);
             if (empty($results)) {
                 echo "<p>Nemame zadne zbozi</p>";
             } else {
@@ -67,18 +65,18 @@ require_once("inc/functions.php");;
                     <thead>
                         <tr>
                             <th>Cislo zbozi
-                                <a href="index.php?orderby=id_zbozi">+</a>
-                                <a href="index.php?orderby=id_zbozi&desc=true">-</a>
+                                <a href="index.php?orderzboziby=id_zbozi">+</a>
+                                <a href="index.php?orderzboziby=id_zbozi&zbozidesc=true">-</a>
                             </th>
                             <th>Nazev zbozi
-                                <a href="index.php?orderby=nazev">+</a>
-                                <a href="index.php?orderby=nazev&desc=true">-</a>
+                                <a href="index.php?orderzboziby=nazev">+</a>
+                                <a href="index.php?orderzboziby=nazev&zbozidesc=true">-</a>
                             </th>
-                            <th>Cena zbozi
-                                <a href="index.php?orderby=cena">+</a>
-                                <a href="index.php?orderby=cena&desc=true">-</a>
+                            <th colspan="2">Cena zbozi
+                                <a href="index.php?orderzboziby=cena">+</a>
+                                <a href="index.php?orderzboziby=cena&zbozidesc=true">-</a>
                             </th>
-                            <th>Cena zbozi s DPH</th>
+                            <th colspan="2">Cena zbozi s DPH</th>
                             <th>Upravit zbozi</th>
                             <th>Smazat zbozi</th>
                         </tr>
@@ -92,8 +90,10 @@ require_once("inc/functions.php");;
                         <tr>
                             <td> <?php echo $result["id_zbozi"]; ?></td>
                             <td> <?php echo $result["nazev"]; ?></td>
-                            <td> <?php echo $result["cena"] . " Kč"; ?></td>
-                            <td> <?php echo strval(intval($result["cena"]) * 1.21) . " Kč" ?></td>
+                            <td> <?php echo $result["cena"]; ?></td>
+                            <td>Kc</td>
+                            <td> <?php echo strval(intval($result["cena"]) * 1.21); ?></td>
+                            <td>Kc</td>
                             <td> <a href=<?php echo "upravitzbozi.php?id=" . $result["id_zbozi"] ?>>*</a></td>
                             <td> <a href=<?php echo "inc/smazatzbozi.inc.php?id=". $result["id_zbozi"] ?>>X</a></td>
                         </tr>
@@ -113,6 +113,70 @@ require_once("inc/functions.php");;
                 <button type="submit" name="pridat_zbozi">Pridat</button>
 
             </form>
+        </div>
+
+        <div id="faktury">
+            <h3>Faktury</h3>
+            <?php $faktury = vypis_faktury($conn, $_GET["orderfakturyby"], $_GET["fakturydesc"]); ?>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Cislo faktury
+                            <a href="index.php?orderfakturyby=id_fak">+</a>
+                            <a href="index.php?orderfakturyby=id_fak&fakturydesc=true">-</a>
+                        </th>
+                        <th>
+                            Zakaznik
+                            <a href="index.php?orderfakturyby=jmeno">+</a>
+                            <a href="index.php?orderfakturyby=jmeno&fakturydesc=true">-</a>
+                        </th>
+                        <th>
+                            Email
+                            <a href="index.php?orderfakturyby=email">+</a>
+                            <a href="index.php?orderfakturyby=email&fakturydesc=true">-</a>
+                        </th>
+                        <th colspan="2">
+                            Cena
+                            <a href="index.php?orderfakturyby=cena_fak">+</a>
+                            <a href="index.php?orderfakturyby=cena_fak&fakturydesc=true">-</a>
+                        </th>
+                        <th colspan="2">Cena s DPH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+
+                    foreach($faktury as $faktura) {
+                        ?> 
+                        <tr>
+                            <td>
+                                <a href="<?php echo "faktura.php?id=" . $faktura["id_fak"] ?>">
+                                    <?php echo $faktura["id_fak"]; ?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<?php echo "zakaznik.php?id=" . $faktura["id_zak"] ?>">
+                                    <?php echo $faktura["jmeno"]; ?>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="<?php echo "mailto:" . $faktura["email"]; ?>">
+                                    <?php echo $faktura["email"]; ?>
+                                </a>
+                            </td>
+                            <td><?php echo $faktura["cena_fak"]; ?></td>
+                            <td>Kc</td>
+                            <td><?php echo strval(intval($faktura["cena_fak"]) * 1.21); ?></td>
+                            <td>Kc</td>
+                        </tr>
+                        <?php
+                    }
+                    
+                    ?>
+                </tbody>
+            </table>
         </div>
     </div>
 
