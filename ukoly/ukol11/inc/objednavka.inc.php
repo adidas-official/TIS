@@ -13,28 +13,37 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_f
     require_once("dbh.inc.php");
 
     // zkontrolovat, jestli souhlasi ks a id
-    $id_zak = $_POST["id_zbozi"];
+    $id_zbozi = $_POST["id_zbozi"];
+
+    // echo "id:zbozi<br>";
+    // echo "<pre>" . print_r($id_zbozi, true) . "</pre>";
+
+
     $pocet_ks = $_POST["ks"];
 
     // echo "id:ks<br>";
     // echo "<pre>" . print_r($pocet_ks, true) . "</pre>";
-
+   
     $query = "SELECT id_zbozi, cena FROM zbozi WHERE ";
     $counter = 0;
 
-    for ($i = 1; $i <= count($pocet_ks); $i++) {
-        if (isset($id_zak[$i])) {
-            $counter += 1;
-            // echo "ID: " . $id_zbozi[$i] . "<br>";
-            // echo "Pocet ks: " . $pocet_ks[$i] . "<br>";
-            $query .= "id_zbozi = '$id_zak[$i]'";
-            if ($counter != count($id_zak)) {
-                $query .= " OR ";
-            }
+    // echo "<pre>".print_r(array_keys($id_zbozi), true)."</pre>";
+
+    foreach($id_zbozi as $key_id) {
+        // echo $key_id . "=";
+        // echo $pocet_ks[$key_id] . "<br>";
+        $query .= "id_zbozi = '$key_id'";
+        $counter += 1;
+        if ($counter != count($id_zbozi)) {
+            $query .= " OR ";
         }
     }
+
+
     $query .= ";";
 
+    // echo $query;
+    // exit();
     // select vsechno zbozi se zadanymi id
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -51,6 +60,7 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_f
         $faktura_cena += $celkem;
 
     }
+
 
     $zakaznik_faktura = htmlentities($_POST["zakaznik_faktura"]);
     $now = time();

@@ -30,17 +30,16 @@ if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["id_fak"]))
     $query = "SELECT id_zbozi, cena FROM zbozi WHERE ";
     $counter = 0;
 
-    for ($i = 1; $i <= count($pocet_ks); $i++) {
-        if (isset($id_zbozi[$i])) {
-            $counter += 1;
-            echo "ID: " . $id_zbozi[$i] . "<br>";
-            echo "Pocet ks: " . $pocet_ks[$i] . "<br>";
-            $query .= "id_zbozi = '$id_zbozi[$i]'";
-            if ($counter != count($id_zbozi)) {
-                $query .= " OR ";
-            }
+    foreach($id_zbozi as $key_id) {
+        // echo $key_id . "=";
+        // echo $pocet_ks[$key_id] . "<br>";
+        $query .= "id_zbozi = '$key_id'";
+        $counter += 1;
+        if ($counter != count($id_zbozi)) {
+            $query .= " OR ";
         }
     }
+
     $query .= ";";
     echo $query;
 

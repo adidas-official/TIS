@@ -61,7 +61,8 @@ if (isset($_GET["id"])) {
             </tbody>
         </table>
 
-        <a href="<?php echo "upravobjednavku.php?id=".$objednavka[0]["id_fak"]?>">Upravit</a>
+        <a href="<?php echo "upravobjednavku.php?id=".$objednavka[0]["id_fak"]?>">Upravit</a><br>
+        <a href="<?php echo "pdfprint.php?id_fak=".$objednavka[0]["id_fak"]."&id_zak=".$objednavka[0]["zakaznik_id"]?>" target="blank">PDF</a>
     </div>
     
 </body>

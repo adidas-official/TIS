@@ -23,18 +23,19 @@ require_once("inc/functions.php");;
     </ul>
 
     <a href="vyhledavac.php">Vyhledavac</a>
+    <a href="pdfprint.php">pdf</a>
     <div id="zakaznici">
         <h2>Zakaznici</h2>
         <?php 
-            $results = vypis_zakazniky($conn);
-            if (empty($results)) {
+            $zakaznici = vypis_zakazniky($conn);
+            if (empty($zakaznici)) {
                 echo "<p>Nemame zakazniky</p>";
             } else {
                 echo "<ul>";
 
-                foreach ($results as $result) {
-                    echo "<li><a href='zakaznik.php?id=" . $result["id_zak"] . "'>"
-                    . $result["jmeno"] .
+                foreach ($zakaznici as $zakaznik) {
+                    echo "<li><a href='zakaznik.php?id=" . $zakaznik["id_zak"] . "'>"
+                    . $zakaznik["jmeno"] .
                     "</a>".
                     "</li>";
                 }
@@ -157,7 +158,7 @@ require_once("inc/functions.php");;
                                 </a>
                             </td>
                             <td>
-                                <a href="<?php echo "zakaznik.php?id=" . $faktura["id_zak"] ?>">
+                                <a href="<?php echo "zakaznik.php?id=" . $faktura["zakaznik_id"] ?>">
                                     <?php echo $faktura["jmeno"]; ?>
                                 </a>
                             </td>

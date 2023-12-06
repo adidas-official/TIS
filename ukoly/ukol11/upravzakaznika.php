@@ -9,16 +9,16 @@ if (!isset($_GET["id"])) {
     exit();
 }
 
-$id_zak = htmlentities($_GET["id"]);
+$id_zbozi = htmlentities($_GET["id"]);
 
-if (!is_numeric($id_zak)) {
+if (!is_numeric($id_zbozi)) {
     header("Location: index.php?error=80");
     exit();
 }
 
 require_once("inc/dbh.inc.php");
 
-$zakaznik = zakaznik_podle_id($id_zak, $conn);
+$zakaznik = zakaznik_podle_id($id_zbozi, $conn);
 
 // echo "<pre>" . print_r($zakaznik, true) . "</pre>";
 
@@ -39,9 +39,9 @@ if (!$zakaznik) {
 <body>
     
     
-    <a href=<?php echo "zakaznik.php?id=" . $id_zak ?>>../</a>
+    <a href=<?php echo "zakaznik.php?id=" . $id_zbozi ?>>../</a>
 
-    <h3>Uprava zakaznika <?php echo $id_zak ?></h3>
+    <h3>Uprava zakaznika <?php echo $id_zbozi ?></h3>
 
     <form action="inc/upravzakaznika.inc.php" method="POST">
         <input type="hidden" name="id_zak" value=<?php echo $zakaznik["id_zak"];?>>

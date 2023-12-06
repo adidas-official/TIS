@@ -6,7 +6,7 @@ require_once("functions.php");
 if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && isset($_GET["id_z"])) {
     try {
         $id = htmlentities($_GET["id"]);
-        $id_zak = htmlentities($_GET["id_z"]);
+        $id_zbozi = htmlentities($_GET["id_z"]);
 
         if (!is_numeric($id)) {
             die("ID musi byt cislo");
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && isset($_GET["id
         $stmt->execute();
 
         if ($stmt) {
-            header("Location: ../zakaznik.php?id=$id_zak");
+            header("Location: ../zakaznik.php?id=$id_zbozi");
         } else {
             echo "error";
             $_SESSION["error"] = 41;

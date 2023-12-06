@@ -12,6 +12,7 @@
 
         // Zakaznik
         31 => "Zakaznik nenalezen",
+        32 => "Zakaznik nebo faktura nenalezena",
 
         // Ostatni
         80 => "Hodnota musi byt cislo",

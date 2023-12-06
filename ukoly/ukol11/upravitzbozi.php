@@ -9,10 +9,10 @@ if (!isset($_GET["id"])) {
     exit();
 }
 
-$id_zak = htmlentities($_GET["id"]);
+$id_zbozi = htmlentities($_GET["id"]);
 
 
-if (!is_numeric($id_zak)) {
+if (!is_numeric($id_zbozi)) {
     header("Location: index.php?error=80");
     exit();
 }
@@ -21,7 +21,7 @@ if (!is_numeric($id_zak)) {
 // Kontrola jestli zbozi je v db
 require_once("inc/dbh.inc.php");
 
-$objednavka = najdi_zbozi_podle_id($id_zak, $conn);
+$objednavka = najdi_zbozi_podle_id($id_zbozi, $conn);
 
 if (!$objednavka) {
     header("Location: index.php?error=22");
@@ -35,7 +35,7 @@ if (!$objednavka) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uprava zbozi <?php echo $id_zak ?></title>
+    <title>Uprava zbozi <?php echo $id_zbozi ?></title>
 </head>
 <body>
     <a href="index.php">../</a>
