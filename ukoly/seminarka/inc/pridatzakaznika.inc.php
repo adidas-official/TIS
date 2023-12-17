@@ -4,6 +4,8 @@ require_once('../config.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["pridat_zakaznika"])) {
 
+    require_once("permissions.inc.php");
+
     if (!empty($_POST["jmeno"]) && !empty($_POST["email"]) ) {
 
         $reg = "/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/";

@@ -31,6 +31,7 @@ try {
     $user = uzivatel_prihlasen($username, $password, $conn);
     if ($user) {
         $_SESSION["userid"] = $user["id"];
+        $_SESSION["role"] = $user["role"];
         header("Location: ../index.php?status=0");
     } else {
         header("Location: ../login.php?error=50");

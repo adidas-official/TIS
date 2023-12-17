@@ -5,6 +5,8 @@ if (empty($_GET["id"])) {
     exit();
 }
 
+require_once("permissions.inc.php");
+
 $id = htmlentities($_GET["id"]);
 
 if (!is_numeric($id)) {

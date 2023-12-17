@@ -3,10 +3,12 @@
 require_once("../config.php");
 require_once("functions.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && isset($_GET["id_z"])) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"])) {
+
+    require_once("permissions.inc.php");
+
     try {
         $id = htmlentities($_GET["id"]);
-        $id_zbozi = htmlentities($_GET["id_z"]);
 
         if (!is_numeric($id)) {
             die("ID musi byt cislo");
@@ -20,7 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["id"]) && isset($_GET["id
         $stmt->execute();
 
         if ($stmt) {
-            header("Location: ../zakaznik.php?id=$id_zbozi");
+            if (isset($_GET["id_z"])){
+                $id_zakaznik = htmlentities($_GET["id_z"]);
+                header("Location: ../zakaznik.php?id=$id_zakaznik");
+            } else {
+                header("Location: ../index.php?status=0");
+            }
         } else {
             echo "error";
             $_SESSION["error"] = 41;

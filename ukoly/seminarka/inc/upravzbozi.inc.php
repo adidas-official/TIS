@@ -5,6 +5,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST" || empty($_POST["id_zbozi"])) {
     exit();
 }
 
+require_once("permissions.inc.php");
+
 $id = $_POST["id_zbozi"];
 if (!is_numeric($id)) {
     header("Location: ../index.php?error=80");

@@ -58,7 +58,7 @@ try {
         exit();
     }
 
-    $query = "INSERT INTO users (role, username, password) VALUES (0, :username, :password);";
+    $query = "INSERT INTO users (role, username, password) VALUES (1, :username, :password);";
     $stmt = $conn->prepare($query);
     $stmt->bindParam("username", $username, PDO::PARAM_STR);
     $stmt->bindParam("password", $hashed_pwd, PDO::PARAM_STR);

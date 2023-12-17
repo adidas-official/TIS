@@ -12,6 +12,8 @@ if (isset($_GET["id"])) {
     header("Location: index.php");
 }
 
+$user_permissions = permissions($_SESSION["role"]);
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,9 @@ if (isset($_GET["id"])) {
 
     <h1>Zakaznik: <?php echo $zakaznik_faktura[0]["jmeno"] . " | " . $zakaznik_faktura[0]["email"] ?></h1>
 
+    <?php if ($user_permissions == "all") { ?>
     <a href=<?php echo "upravzakaznika.php?id=$id" ?>>Upravit zakaznika</a>
+    <?php } ?>
 
     <div id="faktury">
         <h2>Faktury</h2>
@@ -44,17 +48,19 @@ if (isset($_GET["id"])) {
                 <?php 
 
                     foreach ($zakaznik_faktura as $objednavka) {
-                        echo "<tr>".
-                                "<td>".
-                                "<a href='faktura.php?id=" . $objednavka["id_fak"] . "'>" .
-                                $objednavka["id_fak"] .
-                                "</a>
-                                </td>" .
-                                "<td>". $objednavka["cena_fak"] .
-                                "<a href='inc/smaz_fakturu.inc.php?id=" . $objednavka["id_fak"] . "&id_z=" . $zakaznik_faktura[0]["id_zak"]. "'>X</a></td>" .
-                            "</tr>";
-                    }
-                ?>
+                        ?>
+                        <tr>
+                            <td>
+                                <a href='faktura.php?id=<?php echo $objednavka["id_fak"] ?>'>
+                                    <?php echo $objednavka["id_fak"] ?>
+                                </a>
+                            </td>
+                            <td> <?php echo $objednavka["cena_fak"] ?>
+                            <?php if ($user_permissions == "all") { ?>
+                            <a href='inc/smaz_fakturu.inc.php?id=<?php echo $objednavka["id_fak"] . "&id_z=" . $zakaznik_faktura[0]["id_zak"] ?> '>X</a></td>
+                            <?php } ?>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             </table>
             <?php 

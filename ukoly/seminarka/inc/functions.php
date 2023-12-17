@@ -194,3 +194,14 @@
 
         return false;
     }
+
+    function permissions($role_id) {
+        switch ($role_id) {
+            case 0:
+                return "all";
+            case 1:
+                return "read";
+            default:
+                return false;
+        }
+    }

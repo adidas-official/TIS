@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST["uprav"])) {
     exit();
 }
 
+require_once("permissions.inc.php");
+
 if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["id_fak"])) {
     require_once("dbh.inc.php");
 

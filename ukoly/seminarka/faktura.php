@@ -10,6 +10,9 @@ if (isset($_GET["id"])) {
 } else {
     header("Location: index.php");
 }
+
+$user_permissions = permissions($_SESSION["role"]);
+
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +64,9 @@ if (isset($_GET["id"])) {
             </tbody>
         </table>
 
+        <?php if ($user_permissions == "all") { ?>
         <a href="<?php echo "upravobjednavku.php?id=".$objednavka[0]["id_fak"]?>">Upravit</a><br>
+        <?php } ?>
         <a href="<?php echo "pdfprint.php?id_fak=".$objednavka[0]["id_fak"]."&id_zak=".$objednavka[0]["zakaznik_id"]?>" target="blank">PDF</a>
     </div>
     

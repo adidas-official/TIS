@@ -24,3 +24,4 @@ if (!isset($_SESSION["last_regen"])) {
     }
 }
 
+

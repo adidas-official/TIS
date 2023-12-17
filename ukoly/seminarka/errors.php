@@ -29,5 +29,8 @@
         80 => "Hodnota musi byt cislo",
         81 => "Operace se nezdarila",
         82 => "Pristup zamitnut | Neplatna metoda",
-        83 => "Nebyly vyplneny pozadavane hodnoty"
+        83 => "Nebyly vyplneny pozadavane hodnoty",
+
+        // Prava
+        90 => "Nemate opravneni pro tuto operaci",
     ];

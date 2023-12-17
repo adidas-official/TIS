@@ -4,10 +4,12 @@ require_once("config.php");
 require_once("inc/dbh.inc.php");
 require_once("inc/functions.php");;
 
-if (!isset($_SESSION["userid"])) {
+if (!isset($_SESSION["userid"]) || !isset($_SESSION["role"])) {
     header("Location: login.php");
     exit();
 }
+
+$user_permissions = permissions($_SESSION["role"]);
 
 ?>
 
@@ -28,9 +30,7 @@ if (!isset($_SESSION["userid"])) {
     </ul>
 
     <a href="inc/logout.inc.php">Odhlasit</a>
-
     <a href="vyhledavac.php">Vyhledavac</a>
-    <a href="pdfprint.php">pdf</a>
     <div id="zakaznici">
         <h2>Zakaznici</h2>
         <?php 
@@ -52,12 +52,19 @@ if (!isset($_SESSION["userid"])) {
 
         ?>
 
+        <?php 
+
+            if ($user_permissions == "all") {
+        
+        ?>
         <h3>Pridat zakaznika</h3>
         <form action="inc/pridatzakaznika.inc.php" method="POST">
             <input type="text" name="jmeno" required placeholder="Jméno"><br>
             <input type="email" name="email" required placeholder="Email"><br>
             <button type="submit" name="pridat_zakaznika">Pridat</button>
         </form>
+        
+        <?php } ?>
 
         <div id="zbozi">
             <h2>Zbozi</h2>
@@ -85,8 +92,10 @@ if (!isset($_SESSION["userid"])) {
                                 <a href="index.php?orderzboziby=cena&zbozidesc=true">-</a>
                             </th>
                             <th colspan="2">Cena zbozi s DPH</th>
+                            <?php  if ($user_permissions == "all") { ?>
                             <th>Upravit zbozi</th>
                             <th>Smazat zbozi</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                 <tbody>
@@ -102,8 +111,10 @@ if (!isset($_SESSION["userid"])) {
                             <td>Kc</td>
                             <td> <?php echo strval(intval($result["cena"]) * 1.21); ?></td>
                             <td>Kc</td>
+                            <?php  if ($user_permissions == "all") { ?>
                             <td> <a href=<?php echo "upravitzbozi.php?id=" . $result["id_zbozi"] ?>>*</a></td>
                             <td> <a href=<?php echo "inc/smazatzbozi.inc.php?id=". $result["id_zbozi"] ?>>X</a></td>
+                            <?php } ?>
                         </tr>
                     <?php
                 }
@@ -113,6 +124,7 @@ if (!isset($_SESSION["userid"])) {
                 </tbody>
             </table>
 
+            <?php if ($user_permissions == "all") { ?>
             <h2>Nove zbozi</h2>
             <form action="inc/pridatzbozi.inc.php" method="POST">
 
@@ -121,6 +133,7 @@ if (!isset($_SESSION["userid"])) {
                 <button type="submit" name="pridat_zbozi">Pridat</button>
 
             </form>
+            <?php } ?>
         </div>
 
         <div id="faktury">
@@ -151,6 +164,11 @@ if (!isset($_SESSION["userid"])) {
                             <a href="index.php?orderfakturyby=cena_fak&fakturydesc=true">-</a>
                         </th>
                         <th colspan="2">Cena s DPH</th>
+                        <?php if ($user_permissions == "all") { ?>
+                        <th>
+                            Smazat fakturu
+                        </th>
+                        <?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -178,6 +196,12 @@ if (!isset($_SESSION["userid"])) {
                             <td>Kc</td>
                             <td><?php echo strval(intval($faktura["cena_fak"]) * 1.21); ?></td>
                             <td>Kc</td>
+
+                            <?php if ($user_permissions == "all") { ?>
+                            <td>
+                                <a href="<?php echo "inc/smaz_fakturu.inc.php?id=" . $faktura["id_fak"] ?>">X</a>
+                            </td>
+                            <?php } ?>
                         </tr>
                         <?php
                     }
