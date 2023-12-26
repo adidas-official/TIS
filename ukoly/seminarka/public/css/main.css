@@ -241,3 +241,30 @@ thead tr {
 table.objednavka input[type="checkbox"] {
     display: none;
 }
+
+tr.oznacene {
+    background-color: #A0DF37;
+}
+
+button[name="objednat"] {
+    margin: 0;
+}
+
+.celkem span {
+    display: inline-block;
+    margin-left: 1ch;
+}
+
+.celkem {
+    justify-content: space-between;
+    margin-top: 1ch;
+}
+
+.cena_container {
+    width: 30%;
+    text-align: right;
+    border: solid 1px;
+    padding: 2ch;
+    font-weight: bold;
+    border-radius: 5px;
+}

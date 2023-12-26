@@ -7,8 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST["objednat"])) {
     header("Location: ../index.php");
     exit();
 }
+print_r(var_dump($_POST));
 
 if (isset($_POST["id_zbozi"]) && isset($_POST["ks"]) && isset($_POST["zakaznik_faktura"])) {
+
 
     require_once("dbh.inc.php");
 
