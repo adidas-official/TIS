@@ -63,7 +63,6 @@ nav span.active {
     border-radius: 0 0 5px 5px;
     height: 50vh;
     overflow: auto;
-
 }
 
 .karta.active {
@@ -105,7 +104,7 @@ form input, button {
     box-sizing: content-box;
 }
 
-.karta input, .karta button {
+.karta input, .celkem button, .karta button {
     width: 40%;
 }
 
@@ -173,6 +172,10 @@ input:-webkit-autofill:active{
     width: 100%;
     justify-content: center;
     align-items: center;
+}
+
+.flex-justify {
+    justify-content: space-between;
 }
 
 .center {
@@ -246,7 +249,8 @@ tr.oznacene {
     background-color: #A0DF37;
 }
 
-button[name="objednat"] {
+button[name="objednat"],
+button[name="uprav"] {
     margin: 0;
 }
 
@@ -267,4 +271,25 @@ button[name="objednat"] {
     padding: 2ch;
     font-weight: bold;
     border-radius: 5px;
+}
+
+.full-container {
+    border: solid 1px;
+    border-radius: 5px;
+}
+
+/* Vyhledavani */
+.input-container::before {
+    content: "";
+    background: #A0DF36;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    vertical-align: middle;
+    border-radius:8px;
+}
+
+.input-container.disabled::before {
+    background-color: #D9F2AF;
 }

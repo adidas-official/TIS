@@ -1,3 +1,20 @@
+function celkem() {
+    let cena_total = 0;
+
+    $('.objednavka tbody tr.oznacene').each(function() {
+
+        let row_cena_selector = $(this).find(".cena").text();
+        let pocet = $(this).find("input[type=number]").val();
+        let row_cena = row_cena_selector * pocet;
+
+        cena_total += row_cena;
+
+    });
+
+    return cena_total;
+
+}
+
 $(document).ready(function() {
 
     // Login page 
@@ -15,19 +32,6 @@ $(document).ready(function() {
             $("#"+target).addClass("active");
         });
     });
-
-    // // Pridani zbozi do objednavky
-    // $(".objednavka tbody tr").each(function () { 
-    //     $(this).click(function(e) {
-    //         e.preventDefault();
-    //         $(this).toggleClass("oznacene");
-    //         let box = $(this).find("input[type=checkbox]");
-    //         let pocet = $(this).find("input[type=number]");
-    //         console.log(pocet.val());
-    //         box.prop("checked", !box.prop("checked"));
-    //     });
-        
-    // });
 
     function oznac(row, toggle=true) {
 
@@ -59,22 +63,6 @@ $(document).ready(function() {
         
     });
 
-    function celkem() {
-        let cena_total = 0;
-
-        $('.objednavka tbody tr.oznacene').each(function() {
-
-            let row_cena_selector = $(this).find(".cena").text();
-            let pocet = $(this).find("input[type=number]").val();
-            let row_cena = row_cena_selector * pocet;
-
-            cena_total += row_cena;
-
-        });
-
-        return cena_total;
-
-    }
 
     // Zobrazeni cenove kalkulace
     const cena = $('.show_cena');

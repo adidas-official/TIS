@@ -131,110 +131,71 @@ if (isset($_GET["search"])) {
 
     $results = find($co, $kde);
 }
-
+include_once("public/templates/header.html");
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cezar G3000 | Vyhledavani</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            let containers = document.querySelectorAll(".input-container");
-
-            containers.forEach(function(container, index) {
-                container.addEventListener("click", function() {
-                    containers.forEach(function(otherContainer) {
-                        otherContainer.querySelector("input").disabled = true;
-                        otherContainer.querySelector("input").value = "";
-                    });
-                    this.querySelector("input").disabled = false;
-                    this.querySelector("input").focus();
-                });
-            });
-        });
-    </script>
-
-    <style>
-
-        input {
-            margin: 0;
-            height: 22px;
-        }
-
-        .input-container::before {
-            content: "";
-            background: #000;
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-            vertical-align: middle;
-        }
-
-    </style>
-</head>
 <body>
+    <script src="public/js/hledej.js"></script>
+    <div class="container">
     
-<a href="index.php">../</a>
-<h3>Vyhledavac</h3>
+        <a href="index.php">../</a>
+        <h3>Vyhledavac</h3>
+        <p>Vyberte, podle ceho chcete vyhledavat</p>
 
-<form action="" method="GET">
-    <div class="input-container">
-        <input type="text" name="search[zakaznik]" placeholder="Zakaznik"><br>
+        <form action="" method="GET">
+            <div class="input-container">
+                <input type="text" name="search[zakaznik]" placeholder="Zakaznik"><br>
+            </div>
+            <div class="input-container disabled">
+                <input type="text" name="search[email]" placeholder="Email"><br>
+            </div>
+            <div class="input-container disabled">
+                <input type="text" name="search[zbozi]" placeholder="Zbozi"><br>
+            </div>
+            <div class="input-container disabled">
+                <input type="text" name="search[faktura]" placeholder="Cislo faktury"><br>
+            </div>
+            <button type="submit" value="hledat">Hledat</button>
+        </form>
+
+        <div class="table-container full-container" id="results">
+            <?php 
+                $sloupce = array_keys($results[0]);
+                $pocet_sloupcu = count($sloupce);
+            ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <?php foreach($sloupce as $sloupec) {
+                                echo "<th>" . $sloupec . "</th>";
+                            } ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        
+                        switch ($kde) {
+                            case "zakaznik":
+                                print_zak($results);
+                                break;
+                            case "email":
+                                print_zak($results);
+                                break;
+                            case "zbozi":
+                                print_zbozi($results);
+                                break;
+                            case "faktura":
+                                print_fak($results);
+                                break;
+                        }
+
+
+                        ?>
+                    </tbody>
+                </table>
+
+        </div>
     </div>
-    <div class="input-container">
-        <input type="text" name="search[email]" disabled placeholder="Email"><br>
-    </div>
-    <div class="input-container">
-        <input type="text" name="search[zbozi]" disabled placeholder="Zbozi"><br>
-    </div>
-    <div class="input-container">
-        <input type="text" name="search[faktura]" disabled placeholder="Cislo faktury"><br>
-    </div>
-    <button type="submit" value="hledat">Hledat</button>
-</form>
-
-<div id="results">
-    <?php 
-        $sloupce = array_keys($results[0]);
-        $pocet_sloupcu = count($sloupce);
-    ?>
-        <table>
-            <thead>
-                <tr>
-                    <?php foreach($sloupce as $sloupec) {
-                        echo "<th>" . $sloupec . "</th>";
-                    } ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                
-                switch ($kde) {
-                    case "zakaznik":
-                        print_zak($results);
-                        break;
-                    case "email":
-                        print_zak($results);
-                        break;
-                    case "zbozi":
-                        print_zbozi($results);
-                        break;
-                    case "faktura":
-                        print_fak($results);
-                        break;
-                }
-
-
-                ?>
-            </tbody>
-        </table>
-
-</div>
 
 </body>
 </html>
